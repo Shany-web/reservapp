@@ -16,9 +16,8 @@ public class ClienteService {
     @Autowired
     private ClienteRepository cliRepo;
 
-    public Cliente findByEmail(String email) {
-        Cliente cli = cliRepo.findByEmail(email).orElseThrow(null);
-        return cli;
+    public ClienteDTO findByEmail(String email) {
+        return mapToDTO(cliRepo.findByEmail(email).orElseThrow(null));
     }
 
     public ClienteDTO mapToDTO(Cliente cli) {
@@ -27,6 +26,10 @@ public class ClienteService {
                 .nombre(cli.getNombre())
                 .reservas(cli.getReservas()).build();
 
+    }
+
+    public ClienteDTO findById(int id) {
+        return mapToDTO(cliRepo.findById(id).orElseThrow(null));
     }
 
     public Cliente mapToModel(ClienteDTO dto) {
@@ -42,21 +45,28 @@ public class ClienteService {
         return mapToDTO(cliRepo.save(mapToModel(cli)));
     }
 
-    public void deleteClient(int id) {
+    public String deleteClient(int id) {
         cliRepo.deleteById(id);
+        return "Cliente Eliminado exitosamente";
     }
 
-    public List<Cliente> listClient() {
-        return cliRepo.findAll();
+    public List<ClienteDTO> listClient() {
+        return cliRepo.findAll().stream()
+                .map(this::mapToDTO)
+                .toList();
     }
 
-    public Cliente updateClient(ClienteDTO dto, int id) {
+    public ClienteDTO updateClient(ClienteDTO dto, int id) {
         Cliente cl = cliRepo.findById(id).orElse(null);
 
         if (cl == null) {
             throw new EntityNotFoundException("Cliente no encontrado");
         }
-        return cliRepo.save(mapToModel(dto));
+        cl.setEmail(dto.getEmail());
+        cl.setNombre(dto.getNombre());
+        cl.setReservas(dto.getReservas());
+        cl.setTelefono(dto.getTelefono());
+        return mapToDTO(cliRepo.save(cl));
     }
 
     public boolean existbyName(String name) {

@@ -43,12 +43,18 @@ public class HorarioService {
 
     }
 
-    public Horario updateSchedule(int id, HorarioDTO horario) {
+    public HorarioDTO updateSchedule(int id, HorarioDTO horario) {
         Horario ho = horarioRepo.findById(id).orElseThrow(null);
         if (ho == null) {
             throw new EntityNotFoundException("Horario no encontrado");
         }
-        return horarioRepo.save(mapToModel(horario));
+        ho.setEstadoHorario(horario.getEstadoHorario());
+        ho.setFechaHorario(horario.getFechaHorario());
+        ho.setHoraFin(horario.getHoraFin());
+        ho.setHoraInicio(horario.getHoraInicio());
+        ho.setProfesional(horario.getProfesional());
+
+        return mapToDTO(horarioRepo.save(ho));
     }
 
     public void deleteById(int id) {
