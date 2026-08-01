@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public interface PagoRepository extends JpaRepository<Pago, Integer> {
     public List<Pago> findByMonto(double monto);
 
-    public List<Pago> findByEstado(EstadoPago estado);
+    public List<Pago> findByEstadoPago(EstadoPago estado);
 
     public List<Pago> findByFechaPago(LocalDate fechaPago);
 

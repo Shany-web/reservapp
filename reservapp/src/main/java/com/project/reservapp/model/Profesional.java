@@ -2,7 +2,9 @@ package com.project.reservapp.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.annotation.Nullable;
@@ -44,18 +46,20 @@ public class Profesional {
 
     @NotBlank(message = "El correo es obligatorio")
     @Email(message = "El formato del correo no es válido")
-    @OneToMany(mappedBy = "reseva")
     @Size(max = 100, message = "El correo no puede superar los 100 caracteres")
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
     @ManyToMany
-    @JoinTable(name = "profesional-especialidad", joinColumns = @JoinColumn(name = "profesional_id"), inverseJoinColumns = @JoinColumn(name = "especialidad_id"))
+    @JsonManagedReference
+    @JoinTable(name = "profesionalespecialidad", joinColumns = @JoinColumn(name = "profesional_id"), inverseJoinColumns = @JoinColumn(name = "especialidad_id"))
     private List<Especialidad> especialidades;
 
     @OneToMany(mappedBy = "profesional")
+    @JsonBackReference
     private List<Reserva> reservas;
 
     @OneToMany(mappedBy = "profesional")
+    @JsonBackReference
     private List<Horario> horarios;
 }

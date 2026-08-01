@@ -3,6 +3,7 @@ package com.project.reservapp.model;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
@@ -26,7 +27,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "cliente")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+property = "id")
 public class Cliente {
 
 	@Id
@@ -40,7 +42,6 @@ public class Cliente {
 
 	@NotBlank(message = "El correo es obligatorio")
 	@Email(message = "El formato del correo no es válido")
-	@OneToMany(mappedBy = "reseva")
 	@Size(max = 100, message = "El correo no puede superar los 100 caracteres")
 	@Column(nullable = false, unique = true, length = 100)
 	private String email;
@@ -51,6 +52,6 @@ public class Cliente {
 	private String telefono;
 
 	@OneToMany(mappedBy = "cliente")
-	private List<Reserva> reservas;
-
+	@JsonManagedReference
+    private List<Reserva> reservas;
 }

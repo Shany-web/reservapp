@@ -70,7 +70,7 @@ public class ClienteService {
     }
 
     public boolean existbyName(String name) {
-        return cliRepo.existsByName(name);
+        return cliRepo.existsByNombre(name);
     }
 
 }

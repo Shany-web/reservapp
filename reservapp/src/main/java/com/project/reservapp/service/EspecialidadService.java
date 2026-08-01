@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.reservapp.model.Especialidad;
+import com.project.reservapp.repository.EspecialidadRepository;
 
 @Service
 public class EspecialidadService {
     @Autowired
-    EspecialidadService service;
+    EspecialidadRepository service;
 
     public Especialidad findById(int id) {
-        return service.findById(id) ;
+        return service.findById(id).orElseThrow(null);
     }
 
     public List<Especialidad> findAll() {
@@ -21,7 +22,7 @@ public class EspecialidadService {
     }
 
     public Especialidad findByname(String name) {
-        return service.findByname(name);
+        return service.findByNombre(name);
     }
 
 }

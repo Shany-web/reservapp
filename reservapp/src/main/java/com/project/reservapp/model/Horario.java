@@ -1,9 +1,13 @@
 package com.project.reservapp.model;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.reservapp.enums.EstadoHorario;
 
@@ -45,7 +49,7 @@ public class Horario {
     @NotNull(message = "La fecha del horario es obligatoria")
     @FutureOrPresent(message = "La fecha del horario debe ser hoy o una fecha futura")
     @Column(nullable = false)
-    private LocalDate fechaHorario;
+    private Date fechaHorario;
 
     @NotNull(message = "La hora de inicio es obligatoria")
     @Column(nullable = false)
@@ -56,6 +60,7 @@ public class Horario {
     private LocalTime horaFin;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "profesional_id")
     private Profesional profesional;
 

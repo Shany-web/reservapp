@@ -1,6 +1,6 @@
 package com.project.reservapp.DTO;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.time.LocalTime;
 
 import com.project.reservapp.enums.EstadoHorario;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class HorarioDTO {
 
     private EstadoHorario estadoHorario;
-    private LocalDate fechaHorario;
+    private Date fechaHorario;
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private Profesional profesional;

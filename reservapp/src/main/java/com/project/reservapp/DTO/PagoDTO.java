@@ -1,6 +1,5 @@
 package com.project.reservapp.DTO;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.project.reservapp.enums.EstadoPago;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PagoDTO {
     private double monto;
-    private EstadoPago estado;
+    private EstadoPago estado_pago;
     private MetodoPago metodo_pago;
     private LocalDateTime fechaPago;
     private Reserva reserva;

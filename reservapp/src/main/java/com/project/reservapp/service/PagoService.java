@@ -2,7 +2,6 @@ package com.project.reservapp.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +24,14 @@ public class PagoService {
     }
 
     public PagoDTO mapToDto(Pago pago) {
-        return PagoDTO.builder().estado(pago.getEstado())
+        return PagoDTO.builder().estado_pago(pago.getEstadoPago())
                 .fechaPago(pago.getFechaPago())
                 .metodo_pago(pago.getMetodo_pago()).monto(pago.getMonto())
                 .reserva(pago.getReserva()).build();
     }
 
     public Pago maptoModel(PagoDTO dto) {
-        return Pago.builder().estado(dto.getEstado())
+        return Pago.builder().estadoPago(dto.getEstado_pago())
                 .fechaPago(dto.getFechaPago())
                 .metodo_pago(dto.getMetodo_pago())
                 .monto(dto.getMonto()).reserva(dto.getReserva()).build();
@@ -41,17 +40,6 @@ public class PagoService {
     public PagoDTO SavePago(PagoDTO dto) {
         return mapToDto(pagoRepo.save(maptoModel(dto)));
     }
-
-    /*
-     * public Pago updatePago(int id, PagoDTO dto) {
-     * Pago pago = pagoRepo.findById(id).orElseThrow();
-     * if (pago == null) {
-     * throw new EntityNotFoundException("Pago no encontrado");
-     * }
-     * return pagoRepo.save(maptoModel(dto));
-     * 
-     * }
-     */
 
     public void DeletePago(int id) {
         Pago pago = pagoRepo.findById(id).orElseThrow();
@@ -67,7 +55,7 @@ public class PagoService {
     }
 
     public List<Pago> findByestado(EstadoPago estado) {
-        return pagoRepo.findByEstado(estado);
+        return pagoRepo.findByEstadoPago(estado);
     }
 
     public List<Pago> findbyfecha(LocalDate fecha) {
@@ -83,7 +71,7 @@ public class PagoService {
                 .orElseThrow(() -> new EntityNotFoundException("Pago no encontrado"));
 
         if (pago.getMonto() == monto) {
-            pago.setEstado(EstadoPago.PAGADO);
+            pago.setEstadoPago(EstadoPago.PAGADO);
             pago.setFechaPago(LocalDateTime.now());
             pagoRepo.save(pago);
         }

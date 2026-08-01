@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ProfesionalRepository extends JpaRepository<Profesional, Integer> {
-    public List<Profesional> findByName(String nombre);
+    public List<Profesional> findByNombre(String nombre);
 
     public List<Profesional> findByEspecialidades(String especialidad);
 

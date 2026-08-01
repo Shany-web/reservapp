@@ -2,6 +2,8 @@ package com.project.reservapp.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class Especialidad {
     private String nombre;
 
     @ManyToMany(mappedBy = "especialidades")
+    @JsonBackReference
     private List<Profesional> profesionales;
 
 }

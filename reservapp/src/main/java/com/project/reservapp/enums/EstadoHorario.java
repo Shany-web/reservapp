@@ -4,6 +4,6 @@ public enum EstadoHorario {
     DISPONIBLE,
     RESERVADO,
     BLOQUEADO,
-    CANCELADO
-
+    CANCELADO,
+    OCUPADO
 }

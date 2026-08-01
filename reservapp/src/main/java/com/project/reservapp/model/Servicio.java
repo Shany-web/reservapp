@@ -3,7 +3,9 @@ package com.project.reservapp.model;
 import java.time.LocalTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
@@ -45,17 +47,16 @@ public class Servicio {
 
     @NotNull(message = "El precio es obligatario")
     @DecimalMin(value = "0.00", message = "El precio debe ser mayor o igual a zero")
-    @Digits(integer = 10, fraction = 2, message = "el precio debe tener maximo 10 enteros y 2 decimales")
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false)
     private double precio;
 
     @NotNull(message = "El precio es obligatario")
     @DecimalMin(value = "0.00", message = "El precio debe ser mayor o igual a zero")
-    @Digits(integer = 10, fraction = 2, message = "el precio debe tener maximo 10 enteros y 2 decimales")
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false)
     private double abono;
 
-    @OneToMany(mappedBy = "reserva")
+    @OneToMany(mappedBy = "servicio")
+    @JsonBackReference
     private List<Reserva> reservas;
 
 }

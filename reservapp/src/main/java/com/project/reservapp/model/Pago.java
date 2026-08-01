@@ -2,7 +2,9 @@ package com.project.reservapp.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.reservapp.enums.EstadoPago;
 import com.project.reservapp.enums.MetodoPago;
@@ -41,22 +43,22 @@ public class Pago {
 
     @NotNull(message = "El monto es obligatario")
     @DecimalMin(value = "0.00", message = "El monto debe ser mayor o igual a zero")
-    @Digits(integer = 10, fraction = 2, message = "el monto debe tener maximo 10 enteros y 2 decimales")
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false)
     private double monto;
 
     @NotBlank(message = "el estado es obligatorio")
     @Enumerated(EnumType.STRING)
-    private EstadoPago estado;
+    private EstadoPago estadoPago;
 
     @NotNull(message = "El metodo de pago  es obligatorio")
     @Enumerated(EnumType.STRING)
     private MetodoPago metodo_pago;
 
     @PastOrPresent(message = "La fecha de pago no puede ser futura")
-    @Column(nullable = true)
+    @Column(nullable = true, name = "fecha_pago")
     private LocalDateTime fechaPago;
 
     @OneToOne(mappedBy = "pago")
+    @JsonBackReference
     private Reserva reserva;
 }

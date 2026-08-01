@@ -2,7 +2,9 @@ package com.project.reservapp.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.project.reservapp.enums.EstadoReserva;
 
@@ -46,14 +48,17 @@ public class Reserva {
     private LocalDateTime fechaCreacionReserva;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "profesional_id")
     private Profesional profesional;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "servicio_id")
     private Servicio servicio;
 
@@ -62,6 +67,7 @@ public class Reserva {
     private Horario horario;
 
     @OneToOne
+    @JsonManagedReference
     @JoinColumn(name = "pago_id")
     private Pago pago;
 }

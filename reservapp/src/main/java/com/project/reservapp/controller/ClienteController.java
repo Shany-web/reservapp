@@ -52,12 +52,12 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<ClienteDTO> getBYEmail(@PathVariable String email){
-        try{
-            ClienteDTO client=cli.findByEmail(email);
-            return new ResponseEntity<>(client,HttpStatus.OK)
-        } catch (RuntimeException e){
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ClienteDTO> getBYEmail(@PathVariable String email) {
+        try {
+            ClienteDTO client = cli.findByEmail(email);
+            return new ResponseEntity<>(client, HttpStatus.OK);
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }

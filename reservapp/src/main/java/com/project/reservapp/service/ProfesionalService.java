@@ -22,7 +22,7 @@ public class ProfesionalService {
     }
 
     public List<Profesional> findByname(String nombre) {
-        return repo.findByName(nombre);
+        return repo.findByNombre(nombre);
     }
 
     public ProfesionalDTO mapToDTO(Profesional dto) {
