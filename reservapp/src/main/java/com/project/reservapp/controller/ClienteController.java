@@ -1,11 +1,9 @@
 package com.project.reservapp.controller;
 
-import com.project.reservapp.repository.ClienteRepository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.reservapp.DTO.ClienteDTO;
-import com.project.reservapp.model.Cliente;
 import com.project.reservapp.service.ClienteService;
 
 import jakarta.validation.Valid;
@@ -25,13 +22,8 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/api/v1/cliente")
 public class ClienteController {
-    private final ClienteRepository clienteRepository;
     @Autowired
     private ClienteService cli;
-
-    ClienteController(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
 
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> allClients() {
