@@ -49,6 +49,7 @@ public class EspecialidadController {
             EspecialidadDTO esp = service.savEspecialidad(dto);
             return new ResponseEntity<>(esp, HttpStatus.CREATED);
         } catch (RuntimeException e) {
+            
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

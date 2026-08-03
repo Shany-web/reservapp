@@ -67,7 +67,7 @@ public class Reserva {
     private Horario horario;
 
     @OneToOne
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "pago_id")
     private Pago pago;
 }

@@ -19,8 +19,8 @@ public class PagoService {
     @Autowired
     PagoRepository pagoRepo;
 
-    public Pago findByid(int id) {
-        return pagoRepo.findById(id).orElseThrow(null);
+    public PagoDTO findByid(int id) {
+        return mapToDto(pagoRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Pago no encontrado")));
     }
 
     public PagoDTO mapToDto(Pago pago) {
@@ -41,29 +41,37 @@ public class PagoService {
         return mapToDto(pagoRepo.save(maptoModel(dto)));
     }
 
-    public void DeletePago(int id) {
-        Pago pago = pagoRepo.findById(id).orElseThrow();
+    public String DeletePago(int id) {
+        Pago pago = pagoRepo.findById(id).orElseThrow(null);
         if (pago == null) {
             throw new EntityNotFoundException("Pago no encontrado");
         }
         pagoRepo.deleteById(id);
+        return "Pago eliminado exitosamente";
     }
 
-    public List<Pago> findByMonto(double monto) {
-        return pagoRepo.findByMonto(monto);
+    public List<PagoDTO> findByMonto(double monto) {
+        return pagoRepo.findByMonto(monto)
+                .stream().map(this::mapToDto)
+                .toList();
 
     }
 
-    public List<Pago> findByestado(EstadoPago estado) {
-        return pagoRepo.findByEstadoPago(estado);
+    public List<PagoDTO> findByestado(EstadoPago estado) {
+        return pagoRepo.findByEstadoPago(estado)
+                .stream().map(this::mapToDto)
+                .toList();
     }
 
-    public List<Pago> findbyfecha(LocalDate fecha) {
-        return pagoRepo.findByFechaPago(fecha);
+    public List<PagoDTO> findbyfecha(LocalDate fecha) {
+        return pagoRepo.findByFechaPago(fecha)
+                .stream().map(this::mapToDto)
+                .toList();
     }
 
-    public Pago findbyreserva(int reservaId) {
-        return pagoRepo.findByReserva(reservaId);
+    public PagoDTO findbyreserva(int reservaId) {
+        return mapToDto(pagoRepo.findByReserva(reservaId));
+
     }
 
     public Pago updatePago(int idPago, double monto) {
@@ -76,5 +84,11 @@ public class PagoService {
             pagoRepo.save(pago);
         }
         return pago;
+    }
+
+    public List<PagoDTO> findAll() {
+        return pagoRepo.findAll().stream()
+                .map(this::mapToDto)
+                .toList();
     }
 }

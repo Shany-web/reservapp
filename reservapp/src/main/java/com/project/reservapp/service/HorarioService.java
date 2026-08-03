@@ -16,8 +16,9 @@ public class HorarioService {
     @Autowired
     HorarioRepository horarioRepo;
 
-    public Horario findById(int id) {
-        return horarioRepo.findById(id).orElseThrow(null);
+    public HorarioDTO findById(int id) {
+        return mapToDTO(
+                horarioRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Horario no encontrado")));
     }
 
     public HorarioDTO mapToDTO(Horario ho) {
@@ -34,8 +35,8 @@ public class HorarioService {
                 .profesional(dto.getProfesional()).build();
     }
 
-    public List<Horario> listSchedule() {
-        return horarioRepo.findAll();
+    public List<HorarioDTO> listSchedule() {
+        return horarioRepo.findAll().stream().map(ho -> mapToDTO(ho)).toList();
     }
 
     public HorarioDTO saveSchedule(HorarioDTO dto) {
@@ -57,12 +58,13 @@ public class HorarioService {
         return mapToDTO(horarioRepo.save(ho));
     }
 
-    public void deleteById(int id) {
+    public String deleteById(int id) {
         Horario ho = horarioRepo.findById(id).orElseThrow(null);
         if (ho == null) {
             throw new EntityNotFoundException("Horario no encontrado");
         }
         horarioRepo.deleteById(id);
+        return "Horario eliminado exitosamente";
     }
 
 }

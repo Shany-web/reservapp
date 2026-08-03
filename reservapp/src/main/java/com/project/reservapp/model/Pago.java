@@ -59,6 +59,6 @@ public class Pago {
     private LocalDateTime fechaPago;
 
     @OneToOne(mappedBy = "pago")
-    @JsonBackReference
+    @JsonManagedReference
     private Reserva reserva;
 }
