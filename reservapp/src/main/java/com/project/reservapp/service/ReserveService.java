@@ -16,16 +16,17 @@ public class ReserveService {
     @Autowired
     ReservaRepository repo;
 
-    public Reserva findById(int id) {
-        return repo.findById(id).orElseThrow(null);
+    public ReservaDTO findById(int id) {
+        return mapToDTO(repo.findById(id).orElseThrow());
     }
 
-    public List<Reserva> findList() {
-        return repo.findAll();
+    public List<ReservaDTO> findList() {
+        return repo.findAll().stream().map(res -> mapToDTO(res)).toList();
     }
 
-    public void deleteReserve(int id) {
+    public String deleteReserve(int id) {
         repo.deleteById(id);
+        return "Reserva Eliminada exitosamnete";
     }
 
     public ReservaDTO mapToDTO(Reserva reserve) {
@@ -61,7 +62,5 @@ public class ReserveService {
 
         return null;
     }
-
-    
 
 }

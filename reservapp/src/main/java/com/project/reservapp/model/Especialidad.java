@@ -36,7 +36,6 @@ public class Especialidad {
     private String nombre;
 
     @ManyToMany(mappedBy = "especialidades")
-    @JsonBackReference
     private List<Profesional> profesionales;
 
 }

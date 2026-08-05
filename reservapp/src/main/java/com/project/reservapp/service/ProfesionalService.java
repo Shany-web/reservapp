@@ -17,12 +17,13 @@ public class ProfesionalService {
     @Autowired
     ProfesionalRepository repo;
 
-    public Profesional findbyId(int id) {
-        return repo.findById(id).orElseThrow(null);
+    public ProfesionalDTO findbyId(int id) {
+        return mapToDTO(repo.findById(id).orElseThrow(null));
     }
 
-    public List<Profesional> findByname(String nombre) {
-        return repo.findByNombre(nombre);
+    public List<ProfesionalDTO> findByname(String nombre) {
+        return repo.findByNombre(nombre).stream().map(prof -> mapToDTO(prof)).toList();
+
     }
 
     public ProfesionalDTO mapToDTO(Profesional dto) {
@@ -36,9 +37,37 @@ public class ProfesionalService {
                 .horarios(model.getHorarios()).nombre(model.getNombre()).reservas(model.getReservas()).build();
     }
 
-    public ProfesionalDTO saveProfesional(int id) {
-        Profesional pro = repo.findById(id).orElseThrow(() -> new EntityNotFoundException("Profesional no encontrado"));
-        return mapToDTO(pro);
+    public ProfesionalDTO saveProfesional(ProfesionalDTO dto) {
+        Profesional pro = new Profesional();
+        pro.setEmail(dto.getEmail());
+        pro.setNombre(dto.getNombre());
+        return mapToDTO(repo.save(pro));
+    }
+
+    public String deleteProfesional(int id) {
+        Profesional pro = repo.findById(id).orElseThrow(null);
+        if (pro == null) {
+            throw new EntityNotFoundException("Pago no encontrado");
+        }
+        repo.deleteById(id);
+        return "Profesional eliminado exitosamente.";
+    }
+
+    public ProfesionalDTO updateprofesional(int id, ProfesionalDTO dto) {
+        Profesional pro = repo.findById(id).orElseThrow(null);
+        if (pro == null) {
+            throw new EntityNotFoundException("Profesional no encontrado");
+        }
+        pro.setEmail(dto.getEmail());
+        pro.setEspecialidades(dto.getEspecialidades());
+        pro.setHorarios(dto.getHorarios());
+        pro.setNombre(dto.getNombre());
+        pro.setReservas(dto.getReservas());
+        return mapToDTO(repo.save(pro));
+    }
+
+    public List<ProfesionalDTO> findall() {
+        return repo.findAll().stream().map(pro -> mapToDTO(pro)).toList();
     }
 
 }

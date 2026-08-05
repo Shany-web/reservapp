@@ -48,17 +48,17 @@ public class Reserva {
     private LocalDateTime fechaCreacionReserva;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference("Cliente-Reserva")
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference("profesional-reserva")
     @JoinColumn(name = "profesional_id")
     private Profesional profesional;
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonBackReference("Servicio-Reserva")
     @JoinColumn(name = "servicio_id")
     private Servicio servicio;
 
@@ -67,7 +67,7 @@ public class Reserva {
     private Horario horario;
 
     @OneToOne
-    @JsonBackReference
+    @JsonBackReference("Pago-Reserva")
     @JoinColumn(name = "pago_id")
     private Pago pago;
 }

@@ -60,7 +60,7 @@ public class Horario {
     private LocalTime horaFin;
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonBackReference("profesional-horario")
     @JoinColumn(name = "profesional_id")
     private Profesional profesional;
 

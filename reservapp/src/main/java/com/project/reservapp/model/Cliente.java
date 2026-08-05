@@ -52,6 +52,6 @@ public class Cliente {
 	private String telefono;
 
 	@OneToMany(mappedBy = "cliente")
-	@JsonManagedReference
+	@JsonManagedReference("Cliente-Reserva")
     private List<Reserva> reservas;
 }

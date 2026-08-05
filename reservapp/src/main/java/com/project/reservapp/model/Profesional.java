@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -51,15 +50,14 @@ public class Profesional {
     private String email;
 
     @ManyToMany
-    @JsonManagedReference
     @JoinTable(name = "profesionalespecialidad", joinColumns = @JoinColumn(name = "profesional_id"), inverseJoinColumns = @JoinColumn(name = "especialidad_id"))
     private List<Especialidad> especialidades;
 
     @OneToMany(mappedBy = "profesional")
-    @JsonBackReference
+    @JsonManagedReference("profesional-reserva")
     private List<Reserva> reservas;
 
     @OneToMany(mappedBy = "profesional")
-    @JsonBackReference
+    @JsonManagedReference("profesional-horario")
     private List<Horario> horarios;
 }
