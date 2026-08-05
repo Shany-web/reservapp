@@ -3,9 +3,7 @@ package com.project.reservapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,9 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.project.reservapp.DTO.ReservaDTO;
 import com.project.reservapp.DTO.ServicioDTO;
-import com.project.reservapp.model.Servicio;
 import com.project.reservapp.service.ServicioService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -50,13 +46,14 @@ public class ServicioController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> deleteServicio(@PathVariable int id) {
-        String result = service.DeleteSevicio(id);
-        if (result.contains("servicio eliminado exitosamente")) {
-            return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            service.deleteServicio(id);
+            return ResponseEntity.ok("Servicio eliminado exitosamente");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
@@ -69,8 +66,8 @@ public class ServicioController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<ServicioDTO> updateServicio(@Valid @RequestBody ServicioDTO dto, int id) {
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<ServicioDTO> updateServicio(@Valid @PathVariable int id, @RequestBody ServicioDTO dto) {
         try {
             ServicioDTO servicio = service.updateServicio(id, dto);
             return new ResponseEntity<>(servicio, HttpStatus.OK);

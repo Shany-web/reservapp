@@ -20,7 +20,7 @@ public class ServicioService {
     }
 
     public ServicioDTO findByNombre(String nombre) {
-        return mapToDTO(repo.findByName(nombre));
+        return mapToDTO(repo.findByNombre(nombre));
     }
 
     public ServicioDTO mapToDTO(Servicio serv) {
@@ -41,13 +41,10 @@ public class ServicioService {
         return repo.findAll().stream().map(ser -> mapToDTO(ser)).toList();
     }
 
-    public String DeleteSevicio(int id) {
-        Servicio ser = repo.findById(id).orElseThrow(null);
-        if (ser == null) {
-            return "Servicio no encontrado";
-        }
-        repo.deleteById(null);
-        return "Servicio eliminado exitosamente";
+    public void deleteServicio(int id) {
+        Servicio ser = repo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Servicio no encontrado"));
+        repo.delete(ser);
     }
 
     public ServicioDTO saveServicio(ServicioDTO dto) {
@@ -64,6 +61,7 @@ public class ServicioService {
             ser.setNombre(serv.getNombre());
             ser.setPrecio(serv.getPrecio());
             ser.setReservas(serv.getReservas());
+            return mapToDTO(repo.save(mapToModel(serv)));
         }
         return mapToDTO(repo.save(mapToModel(serv)));
 

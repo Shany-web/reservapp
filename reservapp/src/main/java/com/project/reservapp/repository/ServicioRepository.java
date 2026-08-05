@@ -7,6 +7,6 @@ import com.project.reservapp.model.Servicio;
 
 @Repository
 public interface ServicioRepository extends JpaRepository<Servicio, Integer> {
-    public Servicio findByName(String nombre);
+    public Servicio findByNombre(String nombre);
 
 }

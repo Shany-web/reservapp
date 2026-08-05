@@ -42,7 +42,7 @@ public class Servicio {
 
     @NotBlank(message = "El nombre del servicioes obligatorio")
     @Size(min = 3, max = 25, message = "el nombre debe tener entre 3 y 100 caracteres")
-    @Column(nullable = false, length = 25)
+    @Column(nullable = false, length = 25, unique = true)
     private String nombre;
 
     @NotNull(message = "La hora de inicio es obligatoria")
